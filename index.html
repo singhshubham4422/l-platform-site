@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>L Platform — AI and coding for students</title>
+    <meta
+      name="description"
+      content="L Platform is a free desktop app for students: a beginner AI course, coding challenges with a built-in Python runner, and tests from teachers. Download for Windows, macOS or Linux."
+    />
+    <meta property="og:title" content="L Platform — Get AI-ready. Learn to code." />
+    <meta
+      property="og:description"
+      content="Free AI course for Class 4–5, coding challenges and teacher tools. Windows, macOS and Linux."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231ba94c'/%3E%3Ctext x='16' y='21' font-family='Arial' font-size='13' font-weight='700' text-anchor='middle' fill='white'%3ELP%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --nav: #0e141e;
+        --nav-2: #1b2433;
+        --green: #1ba94c;
+        --green-d: #148a3d;
+        --green-soft: #e6f6ec;
+        --bg: #f5f7fa;
+        --card: #ffffff;
+        --text: #111827;
+        --text-2: #4b5563;
+        --muted: #6b7280;
+        --border: #e2e6ec;
+        --radius: 10px;
+        --font: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+        --mono: "Cascadia Code", Consolas, "SF Mono", Menlo, monospace;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { font: 16px/1.6 var(--font); color: var(--text); background: var(--bg); }
+      a { color: inherit; text-decoration: none; }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 24px;
+        border-radius: 8px; border: 1px solid transparent; font: 600 16px var(--font); cursor: pointer;
+      }
+      .btn-green { background: var(--green); color: #fff; }
+      .btn-green:hover { background: var(--green-d); }
+      .btn-ghost { border-color: rgba(255,255,255,.25); color: #fff; background: transparent; }
+      .btn-ghost:hover { background: rgba(255,255,255,.06); }
+      .btn-outline { border-color: var(--border); background: #fff; color: var(--text); }
+      svg.i { width: 20px; height: 20px; flex-shrink: 0; }
+
+      /* header + hero */
+      header { background: var(--nav); color: #c9d1db; }
+      .nav { display: flex; align-items: center; gap: 28px; height: 64px; }
+      .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; font-size: 18px; }
+      .mark { width: 32px; height: 32px; border-radius: 7px; background: var(--green); color: #fff;
+        display: grid; place-items: center; font-size: 12px; font-weight: 800; }
+      .nav-links { display: flex; gap: 22px; font-size: 14px; }
+      .nav-links a:hover, .nav-right a:hover { color: #fff; }
+      .nav-right { margin-left: auto; font-size: 14px; }
+      .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; padding: 56px 0 84px; }
+      .kicker { color: #4ade80; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .hero h1 { color: #fff; font-size: 48px; line-height: 1.12; margin: 12px 0 18px; letter-spacing: -.02em; }
+      .hero p.lead { font-size: 19px; color: #b6c0cc; max-width: 560px; }
+      .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+      .meta { margin-top: 14px; font-size: 13px; color: #7d8899; }
+      .window { background: #151d2a; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 18px; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+      .dots { display: flex; gap: 6px; align-items: center; color: #8592a3; font-size: 12px; margin-bottom: 14px; }
+      .dots span { width: 10px; height: 10px; border-radius: 50%; }
+      .code { background: #0b111b; border-radius: 8px; padding: 16px; font: 14px/1.7 var(--mono); color: #e2e8f0; white-space: pre; overflow-x: auto; }
+      .k { color: #7dd3fc; } .f { color: #fcd34d; } .c { color: #6b7280; }
+      .pass { margin-top: 14px; border: 1px solid rgba(34,197,94,.35); background: rgba(34,197,94,.1); color: #86efac; border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+
+      /* sections */
+      section { padding: 84px 0; }
+      .center { text-align: center; }
+      h2 { font-size: 34px; letter-spacing: -.015em; line-height: 1.2; }
+      .sub { color: var(--text-2); margin-top: 10px; max-width: 680px; }
+      .center .sub { margin-left: auto; margin-right: auto; }
+      .grid { display: grid; gap: 20px; margin-top: 40px; }
+      .g2 { grid-template-columns: repeat(2, 1fr); }
+      .g3 { grid-template-columns: repeat(3, 1fr); }
+      .g4 { grid-template-columns: repeat(4, 1fr); }
+      .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+      .icon { width: 42px; height: 42px; border-radius: 8px; background: var(--green-soft); color: var(--green-d); display: grid; place-items: center; }
+      .card h3 { font-size: 18px; margin: 14px 0 6px; }
+      .card p { color: var(--text-2); font-size: 15px; }
+      .card ul { margin-top: 10px; padding-left: 18px; color: var(--text-2); font-size: 14px; }
+      .card li { margin: 4px 0; }
+      .band { background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .modules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 36px; }
+      .mod { border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; background: var(--bg); }
+      .mod .num { font-size: 12px; font-weight: 700; color: var(--green-d); text-transform: uppercase; letter-spacing: .05em; }
+      .mod h4 { margin: 4px 0 8px; font-size: 17px; }
+      .mod ol { padding-left: 18px; font-size: 14px; color: var(--text-2); }
+      .badge { font-size: 22px; float: right; }
+      .steps .card .n { width: 34px; height: 34px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; font-weight: 700; }
+      .roles td, .roles th { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 15px; vertical-align: top; }
+      .roles { width: 100%; border-collapse: collapse; margin-top: 32px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+      .roles th { background: #f8fafc; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+      .dl { background: var(--nav); color: #c9d1db; }
+      .dl h2 { color: #fff; }
+      .dl .sub { color: #aab4c0; }
+      .os-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 36px auto 0; max-width: 860px; }
+      .os { background: var(--nav-2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 22px; text-align: left; color: #c9d1db; }
+      .os h3 { color: #fff; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+      .os p { font-size: 13px; margin: 6px 0 16px; color: #8f9aab; }
+      .os .btn { height: 42px; width: 100%; justify-content: center; font-size: 15px; }
+      .help { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; text-align: left; }
+      .help .card h3 { margin-top: 0; font-size: 16px; }
+      .help code { font: 12px var(--mono); background: #f1f5f9; padding: 2px 6px; border-radius: 4px; word-break: break-all; }
+      details { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-top: 12px; }
+      summary { cursor: pointer; font-weight: 600; }
+      details p { color: var(--text-2); margin-top: 8px; font-size: 15px; }
+      footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: 14px; }
+      footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+
+      /* dialog */
+      .backdrop { position: fixed; inset: 0; background: rgba(8,12,19,.6); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+      .backdrop.open { display: flex; }
+      .dialog { background: #fff; border-radius: 14px; width: 100%; max-width: 460px; padding: 26px; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+      .dialog-head { display: flex; justify-content: space-between; gap: 12px; }
+      .dialog h2 { font-size: 22px; }
+      .dialog .sub { margin-top: 4px; font-size: 14px; }
+      .x { background: none; border: 0; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); }
+      .choices { display: grid; gap: 10px; margin-top: 20px; }
+      .choice { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 10px; background: #fff; cursor: pointer; text-align: left; font: inherit; }
+      .choice:hover { background: #f8fafc; }
+      .choice[aria-checked="true"] { border-color: var(--green); background: var(--green-soft); }
+      .choice b { display: block; }
+      .choice small { color: var(--muted); }
+      .rec { margin-left: auto; color: var(--green-d); font-size: 12px; font-weight: 700; }
+      .dialog .btn { width: 100%; justify-content: center; margin-top: 18px; }
+      .status { margin-top: 14px; font-size: 14px; color: var(--text-2); background: #f8fafc; border-radius: 8px; padding: 12px; display: none; }
+
+      @media (max-width: 920px) {
+        .hero { grid-template-columns: 1fr; padding-top: 32px; }
+        .hero h1 { font-size: 36px; }
+        .g3, .g4, .modules, .os-row, .help { grid-template-columns: 1fr 1fr; }
+        .nav-links { display: none; }
+      }
+      @media (max-width: 600px) {
+        .g2, .g3, .g4, .modules, .os-row, .help { grid-template-columns: 1fr; }
+        h2 { font-size: 28px; }
+        .roles { font-size: 14px; }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+      <symbol id="i-win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.5v7H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></symbol>
+      <symbol id="i-mac" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.5 2-3.7 2.1-3.8-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.8c-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.8-1-2.8-4.2zM14 5.2c.7-.9 1.2-2 1-3.2-1 .1-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></symbol>
+      <symbol id="i-linux" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+      <symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M5 12.9a10 10 0 0 1 5.2-2.8"/><path d="M12 20h.01"/></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+    </svg>
+
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="#"><span class="mark">LP</span> L Platform</a>
+        <nav class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#course">AI course</a>
+          <a href="#teachers">For schools</a>
+          <a href="#download">Download</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="nav-right"><a href="https://l-platform-web.vercel.app/login">School &amp; teacher sign in →</a></div>
+      </div>
+
+      <div class="wrap hero">
+        <div>
+          <div class="kicker">Free for students · Class 4 and up</div>
+          <h1>Get AI-ready.<br />Learn to code.<br />Have fun doing it.</h1>
+          <p class="lead">
+            L Platform is a desktop app with a beginner AI course, hands-on coding challenges with a
+            built-in Python runner, and tests from your teachers — on Windows, Mac and Linux.
+          </p>
+          <div class="actions">
+            <button class="btn btn-green" data-open-download>
+              <svg class="i"><use href="#i-dl" /></svg> Download for free
+            </button>
+            <a class="btn btn-ghost" href="#features">See what's inside</a>
+          </div>
+          <div class="meta"><span id="hero-version">Windows · macOS · Linux</span></div>
+        </div>
+        <div class="window" aria-hidden="true">
+          <div class="dots">
+            <span style="background:#f87171"></span><span style="background:#fbbf24"></span><span style="background:#4ade80"></span>
+            &nbsp; Challenges › Sum of Two Integers · <b style="color:#4ade80">Easy</b>
+          </div>
+<div class="code"><span class="c"># Read two numbers and print their sum</span>
+<span class="k">a</span>, <span class="k">b</span> = <span class="f">map</span>(int, <span class="f">input</span>().split())
+<span class="f">print</span>(a + b)</div>
+          <div class="pass">✓ 2/2 sample tests passed · Run code (Ctrl+Enter)</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="features">
+        <div class="wrap">
+          <h2>Everything a young learner needs, in one app</h2>
+          <p class="sub">Learn, practise and get assessed — designed with schools, safe for kids, and it keeps working when the internet doesn't.</p>
+          <div class="grid g3">
+            <div class="card">
+              <div class="icon"><svg class="i"><use href="#i-spark" /></svg></div>
+              <h3>AI Explorers course</h3>
+              <p>A free, interactive first course on Artificial Intelligence for Class 4–5. Short picture-style cards, a sorting activity and a quiz in every lesson.</p>
+            </div>
+            <div class="card">
+              <div class="icon"><svg class="i"><use href="#i-code" /></svg></div>
+              <h3>Coding challenges</h3>
+              <p>A HackerRank-style board with search and filters. Solve problems in a real code editor with VS Code-like suggestions, then press <b>Run code</b> to check against sample tests.</p>
+            </div>
+            <div class="card">
+              <div class="icon"><svg class="i"><use href="#i-list" /></svg></div>
+              <h3>Tests &amp; assignments</h3>
+              <p>Multiple-choice, written and coding questions from your teachers. Submit in the app and see released scores and feedback in Results.</p>
+            </div>
+            <div class="card">
+              <div class="icon"><svg class="i"><use href="#i-wifi" /></svg></div>
+              <h3>Works offline</h3>
+              <p>Python runs inside the app (no internet needed). Drafts save automatically and submissions sync when you're back online.</p>
+            </div>
+            <div class="card">
+              <div class="icon"><svg class="i"><use href="#i-chart" /></svg></div>
+              <h3>Progress &amp; badges</h3>
+              <p>A progress ring for the course, a badge for every module, and a solved/points tracker for challenges.</p>
+            </div>
+            <div class="card">
+              <div class="icon"><svg class="i"><use href="#i-shield" /></svg></div>
+              <h3>Safe by design</h3>
+              <p>Students only see their own work, teachers only their classes, and every school's data is isolated in the database.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="course" class="band">
+        <div class="wrap">
+          <h2>AI Explorers — a first AI course for Class 4–5</h2>
+          <p class="sub">4 modules · 7 lessons · about 70 minutes. Each lesson: read → do an activity → pass a 4-question quiz (3/4) to unlock the next one.</p>
+          <div class="modules">
+            <div class="mod"><span class="badge">🌟</span><div class="num">Module 1</div><h4>Meet AI</h4><ol><li>What is AI?</li><li>AI around us</li></ol></div>
+            <div class="mod"><span class="badge">🧩</span><div class="num">Module 2</div><h4>How AI Thinks</h4><ol><li>How does AI learn?</li><li>Input → Think → Output</li></ol></div>
+            <div class="mod"><span class="badge">💡</span><div class="num">Module 3</div><h4>Chatbots &amp; LLMs</h4><ol><li>What is an LLM?</li><li>Talking to AI: good prompts</li></ol></div>
+            <div class="mod"><span class="badge">🛡️</span><div class="num">Module 4</div><h4>Responsible AI</h4><ol><li>Using AI safely and kindly</li></ol></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="wrap steps">
+          <h2>Start in three steps</h2>
+          <div class="grid g3">
+            <div class="card"><div class="n">1</div><h3>Download</h3><p>Choose your computer — Windows, Mac or Linux — and install the app.</p></div>
+            <div class="card"><div class="n">2</div><h3>Sign in</h3><p>Use the student account your school or teacher gave you, or join a class with a class code.</p></div>
+            <div class="card"><div class="n">3</div><h3>Learn &amp; build</h3><p>Start the AI course, then open Challenges and solve your first coding problem.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="teachers" class="band">
+        <div class="wrap">
+          <h2>For schools and teachers</h2>
+          <p class="sub">A web console for platform admins, school admins and teachers — the same platform the student app connects to.</p>
+          <table class="roles">
+            <thead><tr><th>Role</th><th>What they do</th></tr></thead>
+            <tbody>
+              <tr><td><b>Student</b><br /><small>Desktop app</small></td><td>AI course, coding challenges with Run code, tests, results, joining classes.</td></tr>
+              <tr><td><b>Teacher</b><br /><small>Web console</small></td><td>Create MCQ, written and coding questions (with test cases), build assignments and tests, review answers and release grades.</td></tr>
+              <tr><td><b>School admin</b><br /><small>Web console</small></td><td>Manage teachers, students, classes and sections for their own school; invitations and reports.</td></tr>
+              <tr><td><b>Platform admin</b><br /><small>Web console</small></td><td>Onboard schools, manage courses and allocations, audit log and platform settings.</td></tr>
+            </tbody>
+          </table>
+          <p class="sub" style="margin-top:18px"><a href="https://l-platform-web.vercel.app/login" style="color:var(--green-d);font-weight:600">Open the school &amp; teacher console →</a></p>
+        </div>
+      </section>
+
+      <section id="download" class="dl center">
+        <div class="wrap">
+          <h2>Download L Platform</h2>
+          <p class="sub">Free for students. <span id="dl-version">Latest version</span> · Windows 10/11 · macOS 11+ (Apple Silicon &amp; Intel) · Linux</p>
+          <div class="os-row">
+            <div class="os"><h3><svg class="i"><use href="#i-win" /></svg> Windows</h3><p>Installer (.exe) <span data-size="windows"></span></p><button class="btn btn-green" data-download="windows">Download</button></div>
+            <div class="os"><h3><svg class="i"><use href="#i-mac" /></svg> macOS</h3><p>Disk image (.dmg) <span data-size="macos"></span></p><button class="btn btn-green" data-download="macos">Download</button></div>
+            <div class="os"><h3><svg class="i"><use href="#i-linux" /></svg> Linux</h3><p>AppImage <span data-size="linux"></span></p><button class="btn btn-green" data-download="linux">Download</button></div>
+          </div>
+          <p class="meta" style="margin-top:22px">Also available: <a href="#" data-download="windows-msi" style="text-decoration:underline">Windows .msi</a> · <a href="#" data-download="linux-deb" style="text-decoration:underline">Linux .deb</a></p>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap center">
+          <h2>Installing for the first time?</h2>
+          <p class="sub">The app is safe. It isn't signed with a paid certificate yet, so your computer may ask you to confirm once.</p>
+          <div class="help">
+            <div class="card"><h3>Windows</h3><p>If you see <b>“Windows protected your PC”</b>, click <b>More info → Run anyway</b>.</p></div>
+            <div class="card"><h3>macOS</h3><p>Open the .dmg and drag the app to <b>Applications</b>. If it's blocked: <b>System Settings → Privacy &amp; Security → Open Anyway</b>. If it says “damaged”, run in Terminal:<br /><code>xattr -cr "/Applications/L_Platform Student.app"</code></p></div>
+            <div class="card"><h3>Linux</h3><p>Make the AppImage runnable, then open it:<br /><code>chmod +x L_Platform*.AppImage</code></p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="band">
+        <div class="wrap">
+          <h2>Questions</h2>
+          <details><summary>Is it free?</summary><p>Yes. The app and the AI Explorers course are free for students.</p></details>
+          <details><summary>How do I get an account?</summary><p>Your school or teacher creates it. You can also join a class with a class code from your teacher inside the app.</p></details>
+          <details><summary>Does it need the internet?</summary><p>You need it to sign in and submit work. The AI course and running Python code work offline, and drafts sync later.</p></details>
+          <details><summary>Which programming languages are supported?</summary><p>Python, Java and C++ in the editor. Python can be run and tested inside the app; Java and C++ answers are checked by your teacher.</p></details>
+          <details><summary>Is my data safe?</summary><p>Each school's data is separated at the database level. Students only see their own work, and we never ask for personal details beyond what your school provides.</p></details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>© <span id="year"></span> L Platform</span>
+        <span><a href="#download">Download</a> · <a href="https://l-platform-web.vercel.app/login">School &amp; teacher sign in</a></span>
+      </div>
+    </footer>
+
+    <div class="backdrop" id="dl-dialog" role="presentation">
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dl-title">
+        <div class="dialog-head">
+          <div>
+            <h2 id="dl-title">Which computer do you use?</h2>
+            <p class="sub">We picked the one we think you have.</p>
+          </div>
+          <button class="x" aria-label="Close" data-close>&times;</button>
+        </div>
+        <div class="choices" role="radiogroup" aria-label="Operating system">
+          <button class="choice" role="radio" data-os="windows"><svg class="i"><use href="#i-win" /></svg><span><b>Windows</b><small>Windows 10 or 11 · .exe</small></span><span class="rec" hidden>Recommended</span></button>
+          <button class="choice" role="radio" data-os="macos"><svg class="i"><use href="#i-mac" /></svg><span><b>macOS</b><small>Apple Silicon &amp; Intel · .dmg</small></span><span class="rec" hidden>Recommended</span></button>
+          <button class="choice" role="radio" data-os="linux"><svg class="i"><use href="#i-linux" /></svg><span><b>Linux</b><small>AppImage</small></span><span class="rec" hidden>Recommended</span></button>
+        </div>
+        <button class="btn btn-green" id="dl-go"><svg class="i"><use href="#i-dl" /></svg> <span id="dl-go-text">Download</span></button>
+        <div class="status" id="dl-status" role="status"></div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // Downloads come from the latest public GitHub Release of the desktop app.
+        var RELEASE_API = 'https://api.github.com/repos/LPlatform/L_Platform_Application/releases/latest';
+        var FALLBACK = 'https://github.com/LPlatform/L_Platform_Application/releases/latest';
+        var MATCH = {
+          windows: function (n) { return /-setup\.exe$/.test(n); },
+          'windows-msi': function (n) { return /\.msi$/.test(n); },
+          macos: function (n) { return /\.dmg$/.test(n); },
+          linux: function (n) { return /\.AppImage$/.test(n); },
+          'linux-deb': function (n) { return /\.deb$/.test(n); }
+        };
+        var LABEL = { windows: 'Windows', macos: 'macOS', linux: 'Linux', 'windows-msi': 'Windows (.msi)', 'linux-deb': 'Linux (.deb)' };
+        var AFTER = {
+          windows: 'Open the .exe. If Windows warns you, click More info → Run anyway.',
+          'windows-msi': 'Open the .msi. If Windows warns you, click More info → Run anyway.',
+          macos: 'Open the .dmg and drag the app to Applications. If it is blocked: System Settings → Privacy & Security → Open Anyway.',
+          linux: 'Run: chmod +x L_Platform*.AppImage — then open it.',
+          'linux-deb': 'Install with: sudo apt install ./L_Platform*.deb'
+        };
+        var assets = {};
+        var detected = detect();
+        var selected = detected;
+        var dialog = document.getElementById('dl-dialog');
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function detect() {
+          var ua = (navigator.userAgent + ' ' + (navigator.platform || '')).toLowerCase();
+          if (/mac|iphone|ipad|darwin/.test(ua)) return 'macos';
+          if (/linux|x11|ubuntu|fedora|cros/.test(ua) && !/android/.test(ua)) return 'linux';
+          return 'windows';
+        }
+        function mb(bytes) { return bytes ? '· ' + (bytes / 1048576).toFixed(1) + ' MB' : ''; }
+
+        fetch(RELEASE_API, { headers: { Accept: 'application/vnd.github+json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (rel) {
+            if (!rel) return;
+            var v = String(rel.tag_name || '').replace(/^app-v/, '');
+            Object.keys(MATCH).forEach(function (p) {
+              var a = (rel.assets || []).filter(function (x) { return MATCH[p](x.name); })[0];
+              if (a) assets[p] = a;
+            });
+            if (v) {
+              document.getElementById('hero-version').textContent = 'Windows · macOS · Linux · Version ' + v;
+              document.getElementById('dl-version').textContent = 'Version ' + v;
+            }
+            document.querySelectorAll('[data-size]').forEach(function (el) {
+              var a = assets[el.getAttribute('data-size')];
+              el.textContent = a ? mb(a.size) : '';
+            });
+            renderChoices();
+          })
+          .catch(function () {});
+
+        function renderChoices() {
+          document.querySelectorAll('.choice').forEach(function (b) {
+            var os = b.getAttribute('data-os');
+            b.setAttribute('aria-checked', String(os === selected));
+            b.querySelector('.rec').hidden = os !== detected;
+          });
+          var a = assets[selected];
+          document.getElementById('dl-go-text').textContent = 'Download for ' + LABEL[selected] + (a ? ' ' + mb(a.size) : '');
+        }
+
+        function start(platform) {
+          var a = assets[platform];
+          var url = a ? a.browser_download_url : FALLBACK;
+          var status = document.getElementById('dl-status');
+          status.style.display = 'block';
+          status.textContent = (a ? 'Your download is starting… ' : 'Opening the downloads page… ') + AFTER[platform];
+          window.location.href = url;
+        }
+
+        function open() {
+          selected = detected;
+          document.getElementById('dl-status').style.display = 'none';
+          renderChoices();
+          dialog.classList.add('open');
+          dialog.querySelector('[aria-checked="true"]').focus();
+        }
+        function close() { dialog.classList.remove('open'); }
+
+        document.querySelectorAll('[data-open-download]').forEach(function (b) { b.addEventListener('click', open); });
+        document.querySelectorAll('[data-download]').forEach(function (b) {
+          b.addEventListener('click', function (e) {
+            e.preventDefault();
+            var p = b.getAttribute('data-download');
+            if (p === 'windows' || p === 'macos' || p === 'linux') { selected = p; open(); selected = p; renderChoices(); }
+            else start(p);
+          });
+        });
+        document.querySelectorAll('.choice').forEach(function (b) {
+          b.addEventListener('click', function () { selected = b.getAttribute('data-os'); renderChoices(); });
+        });
+        document.getElementById('dl-go').addEventListener('click', function () { start(selected); });
+        dialog.addEventListener('click', function (e) { if (e.target === dialog) close(); });
+        dialog.querySelector('[data-close]').addEventListener('click', close);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        renderChoices();
+      })();
+    </script>
+  </body>
+</html>
